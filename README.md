@@ -28,51 +28,96 @@ Here is an overview of the folders and their contents:
 Follow these steps to get your environment ready:
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/buzzline-06-tesfai.git
-   cd buzzline-06-tesfai
+ ```shell
+ git clone https://github.com/yourusername/buzzline-06-tesfai.git
+ cd buzzline-06-tesfai
+ ```
 2. Set up a Python virtual environment:
-```shell
-python3 -m venv .venv
-source .venv/bin/activate  # For Mac/Linux
-.venv\\Scripts\\activate     # For Windows
-```
-3. Install dependencies from requirements.txt:
-```shell
-pip install -r requirements.txt
-```
-4. Set up the environment variables in .env as needed for your project configuration.
+ ```shell
+ python3 -m venv .venv
+ source .venv/bin/activate  # For Mac/Linux
+ .venv\\Scripts\\activate     # For Windows
+ ```
+
+3. Install dependencies from `requirements.txt`:
+ ```shell
+ pip install -r requirements.txt
+ ```
+4. Set up the environment variables in `.env` as needed for your project configuration.
 
 ## Start Zookeeper and Kafka
-1. Start Zookeeper:
-```shell
-cd /path/to/kafka/bin
-./zookeeper-server-start.sh ../config/zookeeper.properties
-```
-2. Start Kafka:
-cd /path/to/kafka/bin
-```shell
-./kafka-server-start.sh ../config/server.properties
-Running the Project
-```
-## Producer (Sending Messages)
 
-1. Open a terminal, navigate to your project folder, and activate your virtual environment.
-2. Run the producer script to begin sending messages:
-```shell
-python -m producers.producer_tesfai
-```
-## Consumer (Processing Messages)
-1. Open another terminal and activate your virtual environment again.
-2. Run the consumer script to process the incoming messages
-```shell
-python -m consumers.consumer_tesfai
-```
-## License
-This project is licensed under the MIT License. See the LICENSE.txt file for details.
+1. **Start Zookeeper**:
+   Zookeeper must be running for Kafka to function. To start Zookeeper:
+ ```shell
+ cd /path/to/kafka/bin
+ ./zookeeper-server-start.sh ../config/zookeeper.properties
+ ```
+    You can also run this in the background:
+ ```shell
+ ./zookeeper-server-start.sh ../config/zookeeper.properties &
+ ```
 
----
+2. **Start Kafka**:
+   After starting Zookeeper, Kafka must be started. To start Kafka:
+ ```shell
+ cd /path/to/kafka/bin
+ ./kafka-server-start.sh ../config/server.properties
+ ```
+    Similarly, you can run this in the background:
+ ```shell
+ ./kafka-server-start.sh ../config/server.properties &
+ ```
+
+   Make sure both Zookeeper and Kafka are running in separate terminals if you're not using the background option.
+
+3. **Kafka Topic Creation**:
+   Ensure the Kafka topic exists. If not, you can create it by running:
+  ```shell
+  ./kafka-topics.sh --create --topic trending_topics --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+  ```
+
+   Replace `trending_topics` with your desired topic name. This topic is where the producer will send messages and the consumer will receive them.
+
+4. **Kafka and Zookeeper Logs**:
+   If there are any issues, check the log files:
+   - Zookeeper logs can be found in `logs/zookeeper.log`.
+   - Kafka logs can be found in `logs/server.log`.
+
+## Running the Project
+
+### Producer (Sending Messages)
+
+1. **Activate the virtual environment** (if not already done):
+ ```shell
+ source .venv/bin/activate  # For Mac/Linux
+ .venv\\Scripts\\activate     # For Windows
+ ```
+
+2. **Run the producer script** to begin sending messages:
+ ```shell
+ python -m producers.py
+ ```
+
+3. **Verify** that messages are being consumed by checking the database or the logs.
+
+### Consumer (Processing Messages)
+
+1. **Activate the virtual environment** (if not already done):
+ ```shell
+ source .venv/bin/activate  # For Mac/Linux
+ .venv\\Scripts\\activate     # For Windows
+ ```
+
+2. **Run the consumer script** to start processing messages:
+ ```shell
+ python -m consumers.py
+ ```
+
+   This will continuously consume messages from Kafka and analyze their sentiment.
+ ---
 ### Explanation of Structure:
+
 1. **Project Title (`# buzzline-06-tesfai`)**: This is the heading at the top of the file.
 2. **Project Overview**: This section introduces what the project is about.
 3. **Project Structure**: Lists and describes the folders in your project.
@@ -80,7 +125,3 @@ This project is licensed under the MIT License. See the LICENSE.txt file for det
 5. **Setup Instructions**: A step-by-step guide to setting up the environment, including cloning the repository, setting up the virtual environment, and installing dependencies.
 6. **Running the Project**: Instructions on how to run both the producer and the consumer, which are the core of the system.
 7. **License**: A section about the MIT License for the project.
-
-This is the kind of content you would typically see in a well-structured `README.md` file, and you can copy-paste this directly into your file.
-
-

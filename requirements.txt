@@ -78,34 +78,68 @@
 # ======================================================
 
 # Up-to-date package management tools
-pip
-setuptools
-wheel
+pip==25.0.1
+setuptools==65.5.0
+wheel==0.38.4
 
 # Easy logging for monitoring code execution
-loguru
+loguru==0.6.0
 
 # Environment variables management
-python-dotenv
-
-# ======================================================
-# DATA ANALYSIS AND VISUALIZATION
-# ======================================================
-
-# Numerical computations
-numpy
-
-# Data manipulation and analysis
-pandas
-
-# Data visualization libraries
-matplotlib
-seaborn
-plotly
+python-dotenv==0.21.0
 
 # ======================================================
 # KAFKA MESSAGE BROKER INTEGRATION
 # ======================================================
 
 # Apache Kafka Python client
-kafka-python
+kafka-python-ng==2.0.3
+
+# Version for platforms where PyQt6 is not available (non-Windows)
+PyQt6; sys_platform != "win32"
+
+# Alternatively, using six separately as required
+six==1.16.0
+
+# ======================================================
+# DATABASE INTEGRATION 
+# ======================================================
+
+# sqlite3 is part of Python Std Lib - no need to install it 
+
+# SQLAlchemy - SQL toolkit and Object-Relational Mapping (ORM) library
+SQLAlchemy==1.4.32
+
+# psycopg2 - PostgreSQL database adapter for Python (optional)
+# psycopg2==2.9.3
+
+# PyMySQL - MySQL client library (optional)
+# PyMySQL==1.0.2
+
+# ======================================================
+# DATA ANALYSIS AND VISUALIZATION
+# ======================================================
+
+# Numerical computations
+numpy==1.24.3
+
+# Data manipulation and analysis
+pandas==1.5.3
+
+# Data visualization libraries
+matplotlib==3.7.0
+seaborn==0.12.2
+plotly==5.10.0
+
+# ======================================================
+# MACHINE LEARNING & TEXT ANALYSIS
+# ======================================================
+
+# TextBlob for sentiment analysis
+textblob==0.19.0
+
+# NLTK (Natural Language Toolkit)
+nltk==3.9.1
+
+# For additional utilities (e.g., regex)
+regex==2024.11.6
