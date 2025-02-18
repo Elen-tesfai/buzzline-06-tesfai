@@ -1,4 +1,2 @@
-import os
-KAFKA_BOOTSTRAP_SERVERS = os.getenv('KAFKA_BOOTSTRAP_SERVERS', 'localhost:9092')
-DB_NAME = os.getenv('DB_NAME', 'sentiment_analysis.db')
-SENTIMENT_ANALYSIS_MODEL = 'textblob'
+KAFKA_BROKER = '127.0.0.1:9092'  # Correct Kafka broker address
+KAFKA_TOPIC = 'buzzline'  # Correct topic name
