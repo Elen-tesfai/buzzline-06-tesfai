@@ -1,69 +1,39 @@
+import json
 import logging
 from kafka import KafkaConsumer
-import json
-import sqlite3
-import os
+from utils.utils_config import KAFKA_BROKER, KAFKA_TOPIC
 
-# Kafka configuration
-KAFKA_BROKER = '127.0.0.1:9092'
-TOPIC = 'your_topic'
-GROUP_ID = 'your_group_id'
-
-# Database configuration
-DB_FILE = 'messages.db'
-
-# Set up logging
+# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Kafka Consumer
 def create_consumer():
+    # Create Kafka consumer
     consumer = KafkaConsumer(
-        TOPIC,
-        group_id=GROUP_ID,
+        KAFKA_TOPIC,
         bootstrap_servers=KAFKA_BROKER,
-        auto_offset_reset='earliest',
-        value_deserializer=lambda m: json.loads(m.decode('utf-8'))
+        group_id="your_group_id",  # Ensure this matches your producer
+        auto_offset_reset="earliest",  # This ensures that we read all messages from the beginning
+        value_deserializer=lambda x: json.loads(x.decode('utf-8'))
     )
-    logger.info(f"Kafka consumer connected to {KAFKA_BROKER}")
     return consumer
 
-# Store message in the SQLite database
-def store_message_in_db(message):
+def consume_messages(consumer):
     try:
-        conn = sqlite3.connect(DB_FILE)
-        cursor = conn.cursor()
-
-        # Ensure table exists
-        cursor.execute('''CREATE TABLE IF NOT EXISTS messages
-                          (category TEXT, sentiment_score REAL, message_length INTEGER)''')
-
-        # Insert the data
-        cursor.execute('''
-            INSERT INTO messages (category, sentiment_score, message_length)
-            VALUES (?, ?, ?)
-        ''', (message['category'], message['sentiment_score'], message['message_length']))
-
-        conn.commit()
-        logger.info(f"Message stored: {message}")
-    except Exception as e:
-        logger.error(f"Error storing message in DB: {e}")
-    finally:
-        conn.close()
-
-# Main loop to consume messages
-def consume_messages():
-    consumer = create_consumer()
-
-    for message in consumer:
-        try:
-            # Get the message value
+        for message in consumer:
+            # Extract message value and log it
             message_value = message.value
+            logger.info(f"Received message: {message_value}")
+    except KeyboardInterrupt:
+        logger.info("Consumer interrupted, shutting down...")
+    finally:
+        consumer.close()
 
-            # Process the message and store in DB
-            store_message_in_db(message_value)
-        except Exception as e:
-            logger.error(f"Error consuming message: {e}")
+def main():
+    # Create the consumer and start consuming messages
+    consumer = create_consumer()
+    logger.info("Consumer started. Waiting for messages...")
+    consume_messages(consumer)
 
 if __name__ == "__main__":
-    consume_messages()
+    main()
