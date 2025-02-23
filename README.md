@@ -28,57 +28,59 @@ Here is an overview of the folders and their contents:
 
 Follow these steps to get your environment ready:
 
-1. Clone the repository:
-    ```shell
-    git clone https://github.com/yourusername/buzzline-06-tesfai.git
-    cd buzzline-06-tesfai
-    ```
+1. **Download the repository**:
+ ```shell
+ git init
+ git remote add origin https://github.com/Elen-tesfai/buzzline-06-tesfai.git
+ git pull origin main
+ cd buzzline-06-tesfai
+ ```
 
 2. Set up a Python virtual environment:
-    ```shell
-    python3 -m venv .venv
-    source .venv/bin/activate  # For Mac/Linux
-    .venv\\Scripts\\activate    # For Windows
-    ```
+ ```shell
+ python3 -m venv .venv
+ source .venv/bin/activate  # For Mac/Linux
+ .venv\\Scripts\\activate    # For Windows
+  ```
 
 3. Install dependencies from `requirements.txt`:
-    ```shell
-    pip install -r requirements.txt
-    ```
+ ```shell
+ pip install -r requirements.txt
+ ```
 
 4. Set up the environment variables in `.env` as needed for your project configuration.
 
 ## Start Zookeeper and Kafka
 
 1. **Start Zookeeper**:  
-   Zookeeper must be running for Kafka to function. To start Zookeeper:
-    ```shell
-    cd /path/to/kafka/bin
-    ./zookeeper-server-start.sh ../config/zookeeper.properties
-    ```
-    You can also run this in the background:
-    ```shell
-    ./zookeeper-server-start.sh ../config/zookeeper.properties &
-    ```
+ Zookeeper must be running for Kafka to function. To start Zookeeper:
+ ```shell
+ cd .\path\to\kafka\bin
+ .\zookeeper-server-start.bat ..\..\config\zookeeper.properties
+  ```
+  You can also run this in the background:
+  ```shell
+  .\zookeeper-server-start.bat ..\..\config\zookeeper.properties &
+  ```
 
 2. **Start Kafka**:  
-   After starting Zookeeper, Kafka must be started. To start Kafka:
-    ```shell
-    cd /path/to/kafka/bin
-    ./kafka-server-start.sh ../config/server.properties
+  After starting Zookeeper, Kafka must be started. To start Kafka:
+ ```shell
+ cd .\path\to\kafka\bin
+ .\kafka-server-start.bat ..\..\config\server.properties
     ```
-    Similarly, you can run this in the background:
-    ```shell
-    ./kafka-server-start.sh ../config/server.properties &
-    ```
+ Similarly, you can run this in the background:
+ ```shell
+ .\kafka-server-start.bat ..\..\config\server.properties &
+   ```
 
     Ensure both Zookeeper and Kafka are running in separate terminals if you're not using the background option.
 
 3. **Kafka Topic Creation**:  
    Ensure the Kafka topic exists. If not, you can create it by running:
-    ```shell
-    ./kafka-topics.sh --create --topic trending_topics --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
-    ```
+ ```shell
+ .\kafka-topics.bat --create --topic trending_topics --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+ ```
     Replace `trending_topics` with your desired topic name. This topic is where the producer will send messages and the consumer will receive them.
 
 4. **Kafka and Zookeeper Logs**:  
@@ -91,53 +93,53 @@ Follow these steps to get your environment ready:
 ### Producer (Sending Messages)
 
 1. **Activate the virtual environment** (if not already done):
-    ```shell
-    source .venv/bin/activate  # For Mac/Linux
-    .venv\\Scripts\\activate    # For Windows
-    ```
+ ```shell
+ source .venv/bin/activate  # For Mac/Linux
+ .venv\\Scripts\\activate    # For Windows
+ ```
 
 2. **Run the producer script** to begin sending messages:
-    ```shell
-    py -m producers.producer_tesfai
-    ```
+ ```shell
+ py -m producers.producer_tesfai
+ ```
 
 3. **Verify** that messages are being consumed by checking the database or the logs.
 
 ### Consumer (Processing Messages)
 
 1. **Activate the virtual environment** (if not already done):
-    ```shell
-    source .venv/bin/activate  # For Mac/Linux
-    .venv\\Scripts\\activate    # For Windows
-    ```
+ ```shell
+ source .venv/bin/activate  # For Mac/Linux
+ .venv\\Scripts\\activate    # For Windows
+ ```
 
-2. **Run the consumer script** to start processing messages:
-    ```shell
-    py -m consumers.consumer_tesfai
-    ```
+2. **Run the consumer script** to start processing messages (with the correct path):
+ ```shell
+ py -m consumers.message_consumer
+  ```
 
 ### Visualization (Displaying Results)
 
 1. **Activate the virtual environment** (if not already done):
-    ```shell
-    source .venv/bin/activate  # For Mac/Linux
-    .venv\\Scripts\\activate    # For Windows
-    ```
+ ```shell
+ source .venv/bin/activate  # For Mac/Linux
+ .venv\\Scripts\\activate    # For Windows
+ ```
 
 2. **Run the producer script** to begin sending messages:
-    ```shell
-    py -m producers.producer_tesfai
-    ```
+ ```shell
+ py -m producers.producer_tesfai
+ ```
 
 3. **Run the consumer script** to start processing messages:
-    ```shell
-    py -m consumers.consumer_tesfai
-    ```
+ ```shell
+ py -m consumers.message_consumer
+ ```
 
 4. **Run the visualization script** to generate charts based on the consumed data:
-    ```shell
-    python -m visualization.visualization
-    ```
+ ```shell
+ python -m visualization.visualization
+ ```
 
     This will generate a **Bar Chart**, **Line Chart**, and **Pie Chart** for sentiment analysis and message lengths.
 
@@ -149,7 +151,7 @@ Follow these steps to get your environment ready:
 2. **Project Overview**: This section introduces what the project is about.
 3. **Project Structure**: Lists and describes the folders in your project.
 4. **Prerequisites**: Requirements for the system to run the project, including Python version and other tools.
-5. **Setup Instructions**: A step-by-step guide to setting up the environment, including cloning the repository, setting up the virtual environment, and installing dependencies.
+5. **Setup Instructions**: A step-by-step guide to setting up the environment, including downloading the repository, setting up the virtual environment, and installing dependencies.
 6. **Running the Project**: Instructions on how to run both the producer and the consumer, which are the core of the system.
 7. **License**: A section about the MIT License for the project.
 
@@ -179,3 +181,21 @@ This table describes the various charts included in this report.
 
 - Ensure you run **all three scripts** in the order: **Producer → Consumer → Visualization** to visualize the data.
 - You may adjust the **sentiment score range** or other parameters in the producer script to simulate more realistic data.
+
+---
+
+### Checkpoint CC6.3
+
+For the **Checkpoint (CC6.3)** assignment, you can run the producer and consumer scripts with the following commands:
+
+1. **Run the producer script** to send messages:
+ ```shell
+ py -m producers.producer_tesfai
+ ```
+
+2. **Run the consumer script** to receive and process messages:
+ ```shell
+ py -m consumers.consumer_tesfai
+ ```
+
+This step processes the messages and stores sentiment analysis results in the database.
