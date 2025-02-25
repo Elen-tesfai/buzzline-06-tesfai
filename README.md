@@ -153,7 +153,7 @@ Follow these steps to get your environment ready:
 4. **Prerequisites**: Requirements for the system to run the project, including Python version and other tools.
 5. **Setup Instructions**: A step-by-step guide to setting up the environment, including downloading the repository, setting up the virtual environment, and installing dependencies.
 6. **Running the Project**: Instructions on how to run both the producer and the consumer, which are the core of the system.
-7. **License**: A section about the MIT License for the project.
+7. **License**: This project is licensed under the **MIT License**. See the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Visualizations
 
